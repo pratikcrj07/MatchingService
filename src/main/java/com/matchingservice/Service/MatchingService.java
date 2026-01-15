@@ -12,12 +12,6 @@ public class MatchingService {
         // For now just log (this proves wiring works)
         log.info("Starting reassignment flow for rideId={}", rideId);
 
-        /*
-         NEXT PHASE (we will implement):
-         1. Fetch pickup location
-         2. Redis GEO search drivers (5km)
-         3. Send offers
-         4. Timeout + retry
-        */
+
     }
 }
