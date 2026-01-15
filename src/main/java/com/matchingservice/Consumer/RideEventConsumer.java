@@ -16,6 +16,7 @@ public class RideEventConsumer {
     @KafkaListener(topics = "ride-events")
     public void consume(RideEvent event) {
 
+
         log.info("RideEvent received: {}", event);
 
         switch (event.getType()) {
