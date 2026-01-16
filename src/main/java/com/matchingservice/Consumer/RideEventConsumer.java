@@ -28,7 +28,7 @@ public class RideEventConsumer {
                     matchingService.reassignRide(event.getRideId());
 
             default -> {
-                // ignore
+
             }
         }
     }
