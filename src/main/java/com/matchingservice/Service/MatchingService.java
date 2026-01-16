@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 public class MatchingService {
 
     public void reassignRide(Long rideId) {
-        // For now just log (this proves wiring works)
         log.info("Starting reassignment flow for rideId={}", rideId);
 
 
