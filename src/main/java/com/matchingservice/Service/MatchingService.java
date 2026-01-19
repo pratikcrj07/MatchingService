@@ -23,4 +23,7 @@ public class MatchingService {
             // TODO: Use Redis geospatial to find nearby drivers
         });
     }
+
+    public void reassignRide(Long rideId) {
+    }
 }
