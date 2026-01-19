@@ -4,6 +4,9 @@ package com.matchingservice.Consumer;
 import com.matchingservice.Service.MatchingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+package com.ridesharing.common.event;
+
+import com.ridesharing.common.event.RideEventType;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 @Component

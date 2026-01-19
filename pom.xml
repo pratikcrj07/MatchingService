@@ -47,6 +47,13 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+<!-- added common contract maven -->
+        <dependency>
+            <groupId>com.ridesharing</groupId>
+            <artifactId>common-contract</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
 
         <!-- Testing -->
         <dependency>
