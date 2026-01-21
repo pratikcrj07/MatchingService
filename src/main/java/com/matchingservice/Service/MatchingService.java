@@ -1,30 +1,54 @@
 package com.matchingservice.Service;
 
-
+import com.RideSharing.Common.Dto.DriverOfferDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MatchingService {
 
-    private final GeocodingService geocodingService;
+    private final DriverSearchService driverSearchService;
+    private final KafkaTemplate<String, DriverOfferDTO> kafkaTemplate;
 
-    public void matchNewRide(Long rideId) {
-        // Example: convert passenger address to coordinates
-        Optional<double[]> coords = geocodingService.getCoordinates("Kathmandu, Nepal");
-        coords.ifPresent(c -> {
-            double lat = c[0];
-            double lon = c[1];
-            System.out.println("Passenger coordinates: " + lat + ", " + lon);
+    public void matchNewRide(Long rideId, double pickupLat, double pickupLon) {
 
-            // TODO: Use Redis geospatial to find nearby drivers
-        });
+        List<Long> drivers =
+                driverSearchService.findNearbyDrivers(
+                        pickupLat,
+                        pickupLon,
+                        5
+                );
+
+        if (drivers.isEmpty()) {
+            log.warn("No drivers found for ride {}", rideId);
+            return;
+        }
+
+        for (Long driverId : drivers) {
+            DriverOfferDTO offer = new DriverOfferDTO(
+                    rideId,
+                    driverId,
+                    pickupLat,
+                    pickupLon,
+                    250.0,
+                    15
+            );
+
+            kafkaTemplate.send(
+                    "driver-offers",
+                    driverId.toString(),
+                    offer
+            );
+        }
     }
 
-    public void reassignRide(Long rideId) {
-        
+    public void reassignRide(Long rideId, double pickupLat, double pickupLon) {
+        matchNewRide(rideId, pickupLat, pickupLon);
     }
 }
