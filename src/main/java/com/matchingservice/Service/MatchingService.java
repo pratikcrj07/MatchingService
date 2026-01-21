@@ -25,5 +25,6 @@ public class MatchingService {
     }
 
     public void reassignRide(Long rideId) {
+        
     }
 }
